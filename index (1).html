@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartfelt Apology</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        
+        .apology-text {
+            font-weight: bold;
+            font-size: 2rem;
+            color: #d53cf7;
+            text-shadow: 0 0 10px #ff73fd, 
+                         0 0 20px #ff73fd, 
+                         0 0 30px #ff73fd, 
+                         0 0 40px #d53cf7;
+            animation: glow 1.5s ease-in-out infinite alternate;
+            text-align: center;
+            position: relative;
+            white-space: pre-line;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff73fd, 
+                             0 0 20px #ff73fd, 
+                             0 0 30px #ff73fd, 
+                             0 0 40px #d53cf7;
+            }
+            to {
+                text-shadow: 0 0 15px #ff73fd, 
+                             0 0 25px #ff73fd, 
+                             0 0 35px #ff73fd, 
+                             0 0 45px #d53cf7;
+            }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .apology-text {
+                font-size: 1.5rem;
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .apology-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden audio player with autoplay -->
+    <audio autoplay loop style="display: none">
+        <source src="https://www.youtube.com/watch?v=s2bYHivH3uA" type="audio/mpeg">
+        <source src="https://open.spotify.com/track/1JNFjZTcLYMddU9YFhq9OK" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <canvas class="particles" id="particles"></canvas>
+    <div class="apology-text">I am sorry Ruri bub, I just let my mind say it I didn't were thinking that time I am sorry bub. I am bad bub please choose to leave me I can't think anything of u I was a big loner for the entire month of June I wasn't thinking straight today this was the longest convo I had in a month.
+I am sorry Ruri.
+Bye</div>
+
+    <script>
+        // Create floating particles effect
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const particles = [];
+        const colors = ['#d53cf7', '#ff73fd', '#ffffff', '#ffb3ff'];
+        
+        class Particle {
+            constructor() {
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.opacity = Math.random() * 0.6 + 0.1;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+        
+        function init() {
+            for (let i = 0; i < 150; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            
+            requestAnimationFrame(animate);
+        }
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resize);
+        init();
+        animate();
+        
+        // Ensure audio autoplay works
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.querySelector('audio');
+            audio.play().catch(e => {
+                // Handle autoplay restrictions
+                console.log('Autoplay prevented:', e);
+            });
+        });
+    </script>
+</body>
+</html>
+
